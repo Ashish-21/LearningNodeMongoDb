@@ -2,27 +2,27 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
 
-router.get('/', (request, response) => {
+router.get('/', async(request, response) => {
   console.log('Fetching Users');
   try {
-    const Users = User.find();
+    const Users = await User.find();
     response.json(Users);
   } catch (error) {
     response.send('Error Occurred:' + error);
   }
 });
 
-router.get('/:id', (request, response) => {
+router.get('/:id', async(request, response) => {
   console.log('Fetching user by their ID');
   try {
-    const User1 = User.findById(request.params.id);
+    const User1 = await User.findById(request.params.id);
     response.json(User1);
   } catch (error) {
     response.send('Error Occurred:' + error);
   }
 });
 
-router.post('/', (request, response) => {
+router.post('/', async(request, response) => {
   console.log('Saving user in DB');
   try {
     const User1 = new User({
@@ -30,7 +30,7 @@ router.post('/', (request, response) => {
       password: 'Sandeep123',
       emailId: 'Sandeep@Cateina.in',
     });
-    const saveUser = User1.save();
+    const saveUser = await User1.save();
     response.json(saveUser);
   } catch (error) {
     console.log('Error Occurred :' + error);
